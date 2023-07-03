@@ -1,0 +1,3 @@
+#binance
+api_key= 'jK8ULUbrYE1169kOK2pHKsGX1EKqMRPbHlNTW8dMeSwAwjod73skhJAssys6rZSY'
+api_secret = 'Ps4NFOfoMOv0Gjy1ABF88dsNCG5CMWiIhxzAcnNnGjKhlHP2WO4Z5uW6AZGhToxD'

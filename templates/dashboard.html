@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Binance Dashboard</title>
+</head>
+<body>
+    <h1>Open Orders</h1>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Type</th>
+            <th>Side</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.symbol }}</td>
+            <td>{{ order.type }}</td>
+            <td>{{ order.side }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Wallet Balance</h1>
+    <table>
+        <tr>
+            <th>Asset</th>
+            <th>Free</th>
+            <th>Locked</th>
+        </tr>
+        {% for asset, balance_info in balance.items() %}
+        <tr>
+            <td>{{ asset }}</td>
+            <td>{{ balance_info.free }}</td>
+            <td>{{ balance_info.locked }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
