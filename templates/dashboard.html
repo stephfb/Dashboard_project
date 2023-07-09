@@ -1,9 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Binance Dashboard</title>
+    <title>Trading Dashboard</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 15000); // Refresh the page every 15 seconds (15000 milliseconds)
+    </script>
 </head>
 <body>
+
+    <h1>Wallet Balance</h1>
+    <table>
+        <tr>
+            <th>Asset</th>
+            <th>Free</th>
+            <th>Locked</th>
+        </tr>
+        {% for asset, balance_info in balance.items() %}
+        <tr>
+            <td>{{ asset }}</td>
+            <td>{{ "%.4f" % balance_info.free }}</td>
+            <td>{{ "%.4f" % balance_info.locked }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
     <h1>Open Orders</h1>
     <table>
         <tr>
@@ -24,18 +57,39 @@
         {% endfor %}
     </table>
 
-    <h1>Wallet Balance</h1>
+    <h1>Open Positions</h1>
     <table>
         <tr>
-            <th>Asset</th>
-            <th>Free</th>
-            <th>Locked</th>
+            <th>Symbol</th>
+            <th>Amount</th>
+            <th>Entry Price</th>
+            <th>Mark Price</th>
+            <th>Unrealized Profit</th>
         </tr>
-        {% for asset, balance_info in balance.items() %}
+        {% for position in positions %}
         <tr>
-            <td>{{ asset }}</td>
-            <td>{{ balance_info.free }}</td>
-            <td>{{ balance_info.locked }}</td>
+            <td>{{ position.symbol }}</td>
+            <td>{{ "%.4f" % position.amount }}</td>
+            <td>{{ "%.4f" % position.entry_price }}</td>
+            <td>{{ "%.4f" % position.mark_price }}</td>
+            <td>{{ "%.4f" % position.unrealized_profit }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h1>Trade History</h1>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Side</th>
+        </tr>
+        {% for trade in trades %}
+        <tr>
+            <td>{{ trade.symbol }}</td>
+            <td>{{ trade.price }}</td>
+            <td>{{ trade.quantity }}</td>
+            <td>{{ trade.side }}</td>
         </tr>
         {% endfor %}
     </table>
