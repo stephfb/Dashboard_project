@@ -4,6 +4,8 @@ binance_api_secret = 'Ps4NFOfoMOv0Gjy1ABF88dsNCG5CMWiIhxzAcnNnGjKhlHP2WO4Z5uW6AZ
 
 #OKX
 
-okx_api_key= '48a15215-8d3a-4457-a0e2-82f1053d46a4'
-okx_api_secret = '9343AECEE7442ABAFBC669905E4B8AF4'
+okx_api_key= 'cf4f49a4-487a-402c-a878-09a8cb012aa6'
+okx_api_secret = '3F249530E953B3AF77666C20B5A327D5'
 okx_passphrase = 'Hextrust302030!'
+
+
