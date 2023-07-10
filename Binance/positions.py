@@ -1,6 +1,6 @@
 from binance.client import Client
 
-def get_position_information(api_key, api_secret):
+def binance_get_positions(api_key, api_secret):
     client = Client(api_key, api_secret)
     positions = client.futures_position_information()
 

@@ -20,24 +20,49 @@
     </script>
 </head>
 <body>
-
-    <h1>Wallet Balance</h1>
+    <h1>Wallet Balance - Binance</h1>
     <table>
         <tr>
             <th>Asset</th>
             <th>Free</th>
             <th>Locked</th>
         </tr>
-        {% for asset, balance_info in balance.items() %}
+        {% if binance_balance is defined %}
+        {% for asset, balance_info in binance_balance.items() %}
         <tr>
             <td>{{ asset }}</td>
             <td>{{ "%.4f" % balance_info.free }}</td>
             <td>{{ "%.4f" % balance_info.locked }}</td>
         </tr>
         {% endfor %}
+        {% endif %}
     </table>
     
-    <h1>Open Orders</h1>
+    <h1>Wallet Balance - OKX</h1>
+    <table>
+        <tr>
+            <th>Currency</th>
+            <th>Equity</th>
+            <th>Cash Balance</th>
+            <th>Isolated Margin Equity</th>
+            <th>Available Equity</th>
+            <!-- Add more columns as needed -->
+        </tr>
+        {% if okx_balance is defined %}
+        {% for currency_info in okx_balance.details %}
+        <tr>
+            <td>{{ currency_info.ccy }}</td>
+            <td>{{ currency_info.eq }}</td>
+            <td>{{ currency_info.cashBal }}</td>
+            <td>{{ currency_info.isoEq }}</td>
+            <td>{{ currency_info.availEq }}</td>
+            <!-- Add more columns as needed -->
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+    
+    <h1>Open Orders - Binance</h1> 
     <table>
         <tr>
             <th>Symbol</th>
@@ -46,7 +71,8 @@
             <th>Quantity</th>
             <th>Price</th>
         </tr>
-        {% for order in orders %}
+        {% if binance_orders is defined %}
+        {% for order in binance_orders %}
         <tr>
             <td>{{ order.symbol }}</td>
             <td>{{ order.type }}</td>
@@ -55,28 +81,65 @@
             <td>{{ order.price }}</td>
         </tr>
         {% endfor %}
+        {% endif %}
+        {% if okx_orders is defined %}
+        {% for order in okx_orders %}
+        <tr>
+            <td>{{ order.symbol }}</td>
+            <td>{{ order.type }}</td>
+            <td>{{ order.side }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.price }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
     </table>
 
-    <h1>Open Positions</h1>
+    <h1>Open Positions - Binance</h1>
     <table>
         <tr>
             <th>Symbol</th>
-            <th>Amount</th>
-            <th>Entry Price</th>
-            <th>Mark Price</th>
-            <th>Unrealized Profit</th>
+            <th>Attributes</th>
         </tr>
-        {% for position in positions %}
+        {% if binance_positions is defined %}
+        {% for position in binance_positions %}
         <tr>
             <td>{{ position.symbol }}</td>
-            <td>{{ "%.4f" % position.amount }}</td>
-            <td>{{ "%.4f" % position.entry_price }}</td>
-            <td>{{ "%.4f" % position.mark_price }}</td>
-            <td>{{ "%.4f" % position.unrealized_profit }}</td>
+            <td>
+                <ul>
+                    {% for attribute in position %}
+                    <li>{{ attribute }}: {{ position[attribute] }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
         </tr>
         {% endfor %}
+        {% endif %}
     </table>
-    <h1>Trade History</h1>
+    
+    <h1>Open Positions - OKX</h1>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Attributes</th>
+        </tr>
+        {% if okx_positions is defined %}
+        {% for position in okx_positions %}
+        <tr>
+            <td>{{ position.symbol }}</td>
+            <td>
+                <ul>
+                    {% for attribute in position %}
+                    <li>{{ attribute }}: {{ position[attribute] }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>    
+
+    <h1>Trade History -</h1>
     <table>
         <tr>
             <th>Symbol</th>
@@ -84,7 +147,8 @@
             <th>Quantity</th>
             <th>Side</th>
         </tr>
-        {% for trade in trades %}
+        {% if binance_trades is defined %}
+        {% for trade in binance_trades %}
         <tr>
             <td>{{ trade.symbol }}</td>
             <td>{{ trade.price }}</td>
@@ -92,6 +156,17 @@
             <td>{{ trade.side }}</td>
         </tr>
         {% endfor %}
+        {% endif %}
+        {% if okx_trades is defined %}
+        {% for trade in okx_trades %}
+        <tr>
+            <td>{{ trade.symbol }}</td>
+            <td>{{ trade.price }}</td>
+            <td>{{ trade.quantity }}</td>
+            <td>{{ trade.side }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
     </table>
 </body>
 </html>
