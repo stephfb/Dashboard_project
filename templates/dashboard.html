@@ -1,45 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trading Dashboard</title>
+    <title>Hex Trust Trading Dashboard</title>
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-left: 20px;
+
         }
         th, td {
             text-align: left;
             padding: 8px;
             border-bottom: 1px solid #ddd;
+            /* Modify the following line to adjust the space between columns */
+            padding-right: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        h1 {
+            font-size: 42px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 30px;
+            text-align: left;
+        }
+        h3 {
+            font-size: 25px;
+            text-align: left;
+            margin-left: 20px;
         }
     </style>
     <script>
-        setTimeout(function() {
-            location.reload();
-        }, 15000); // Refresh the page every 15 seconds (15000 milliseconds)
+        function toggleSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            section.classList.toggle("hidden");
+        }
     </script>
 </head>
 <body>
-    <h1>Wallet Balance - OKX</h1>
-    <table>
+    
+    <h1>Trading Dashboard</h1>
+    <h2>Balances</h1>
+    <h3 onclick="toggleSection('okx-balance')">OKX</h3>
+    <table id="okx-balance" class="hidden">
         <tr>
             <th>Currency</th>
-            <th>Equity</th>
             <th>Available Equity</th>
+            <th>Equity</th>
         </tr>
         {% if okx_balance is defined %}
         {% for currency, balance_info in okx_balance.items() %}
         <tr>
             <td>{{ currency }}</td>
-            <td>{{ balance_info.Equity }}</td>
-            <td>{{ balance_info['Available Equity'] }}</td>
+            <td>{{ balance_info.Equity|float|round(2) }}</td>
+            <td>{{ balance_info['Available Equity']|float|round(2) }}</td>
         </tr>
         {% endfor %}
         {% endif %}
     </table>
-    
-    <h1>Wallet Balance - Binance</h1>
-    <table>
+
+    <h3 onclick="toggleSection('binance-balance')">Binance</h3>
+    <table id="binance-balance" class="hidden">
         <tr>
             <th>Asset</th>
             <th>Free</th>
@@ -53,9 +77,32 @@
         {% endfor %}
         {% endif %}
     </table>
-        
-    <h1>Open Orders - Binance</h1>
-    <table>
+    
+    <h2>Orders</h1>
+    <h3 onclick="toggleSection('okx-orders')">OKX</h3>
+    <table id="okx-orders" class="hidden">
+        <tr>
+            <th>Symbol</th>
+            <th>Time</th>
+            <th>Side</th>
+            <th>Filled Size</th>
+            <th>Filled Price</th>
+        </tr>
+        {% if okx_orders is defined %}
+        {% for order in okx_orders %}
+        <tr>
+            <td>{{ order['Symbol'] }}</td>
+            <td>{{ order['Time'] }}</td>
+            <td>{{ order['Side'] }}</td>
+            <td>{{ order['Filled'] }}</td>
+            <td>{{ order['Filled Price'] }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+    <h3 onclick="toggleSection('binance-orders')">Binance</h3>
+    <table id="binance-orders" class="hidden">
         <tr>
             <th>Time</th>
             <th>Symbol</th>
@@ -81,43 +128,13 @@
         {% endfor %}
         {% endif %}
     </table>
-    
 
-    <h1>Open Orders - OKX</h1>
-    <table>
+    <h2>Positions</h1>
+    <h3 onclick="toggleSection('binance-positions')">Binance</h3>
+    <table id="binance-positions" class="hidden">
         <tr>
             <th>Symbol</th>
-            <th>Order Time</th>
-            <th>Type</th>
-            <th>Side</th>
-            <th>Order Type</th>
-            <th>Fill Price</th>
-            <th>Fill Size</th>
-            <th>Fill Time</th>
-            <th>State</th>
-        </tr>
-        {% if okx_orders is defined %}
-        {% for order_id, order in okx_orders.items() %}
-        <tr>
-            <td>{{ order['Symbol'] }}</td>
-            <td>{{ order['Order Time'] }}</td>
-            <td>{{ order['Type'] }}</td>
-            <td>{{ order['Side'] }}</td>
-            <td>{{ order['Order Type'] }}</td>
-            <td>{{ order['Fill Price'] }}</td>
-            <td>{{ order['Fill Size'] }}</td>
-            <td>{{ order['Fill Time'] }}</td>
-            <td>{{ order['State'] }}</td>
-        </tr>
-        {% endfor %}
-        {% endif %}
-    </table>
-
-    <h1>Open Positions - Binance</h1>
-    <table>
-        <tr>
-            <th>Symbol</th>
-            <th>Amount</th>
+            <th>Size</th>
             <th>Entry Price</th>
             <th>Mark Price</th>
             <th>Unrealized Profit</th>
@@ -134,10 +151,10 @@
         {% endfor %}
         {% endif %}
     </table>
-    
-    
-    <h1>Open Positions - OKX</h1>
-    <table>
+
+
+    <h3 onclick="toggleSection('okx-positions')">OKX</h3>
+    <table id="okx-positions" class="hidden">
         <tr>
             <th>Symbol</th>
             <th>Size</th>
@@ -153,17 +170,18 @@
         {% for position in okx_positions %}
         <tr>
             <td>{{ position['Symbol'] }}</td>
-            <td>{{ position['Size'] }}</td>
-            <td>{{ position['Entry Price'] }}</td>
-            <td>{{ position['Margin'] }}</td>
-            <td>{{ position['Mark Price'] }}</td>
-            <td>{{ position['Margin Level'] }}</td>
-            <td>{{ position['Est Liquidity Price'] }}</td>
-            <td>{{ position['PnL'] }}</td>
-            <td>{{ position['PnL%'] }}</td>
+            <td>{{ position['Size']|float|round(2) }}</td>
+            <td>{{ position['Entry Price']|float|round(2) }}</td>
+            <td>{{ position['Margin']|float|round(2) }}</td>
+            <td>{{ position['Mark Price']|float|round(2) }}</td>
+            <td>{{ position['Margin Level']|float|round(2) }}</td>
+            <td>{{ position['Est Liquidity Price']|float|round(2) }}</td>
+            <td>{{ position['PnL']|float|round(2) }}</td>
+            <td>{{ (position['PnL%']|float * 100)|round(2) }}</td>
         </tr>
         {% endfor %}
         {% endif %}
-    </table>    
+    </table>
 
-    <h1
+</body>
+</html>

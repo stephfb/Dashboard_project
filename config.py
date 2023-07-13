@@ -1,14 +1,3 @@
-#binance
-binance_api_key= 'e
-binance_api_secret = '
-
-#OKX
-
-okx_api_key= '
-okx_api_secret = '
-okx_passphrase = 
-
-
 
 
 #steph keys

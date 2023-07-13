@@ -9,21 +9,19 @@ def create_okx_orders_dictionary(orders_data):
     orders_dict = {}
     if isinstance(orders_data, list):
         for order in orders_data:
-            order_id = order['ordId']
-            orders_dict[order_id] = {
+            orders_dict = {
                 'Symbol': order['instId'],
-                'Order Time': order['cTime'],
-                'Type': order['instType'],
+                'Time': order['uTime'],
                 'Side': order['side'],
-                'Order Type': order['ordType'],
-                'Fill Price': order['fillPx'],
-                'Fill Size': order['fillSz'],
-                'Fill Time': order['fillTime'],
-                'State': order['state']
+                'Filled': order['fillSz'],
+                'Filled Price': order['fillPx'],
             }
+    else:
+        orders_dict = {}
     return orders_dict
 
-def get_order_list(okx_api_key, okx_api_secret, okx_passphrase): 
+#Connect to API
+def okx_get_order_list(apikey, secretkey, passphrase): 
     apikey = config.okx_api_key
     secretkey = config.okx_api_secret
     passphrase = config.okx_passphrase
@@ -32,15 +30,14 @@ def get_order_list(okx_api_key, okx_api_secret, okx_passphrase):
 
     tradeAPI = Trade.TradeAPI(apikey, secretkey, passphrase, False, flag)
 
-    # Retrieve all incomplete orders
-    result = tradeAPI.get_order_list(
-        instType="SPOT",
-        ordType="post_only,fok,ioc"
-    )
+    #Get orders information 
 
-    # Convert orders data to dictionary
-    orders_dict = create_okx_orders_dictionary(result)
+    result = tradeAPI.get_order_list()
+
+    orders_data = result['data'] if 'data' in result else []
+
+    #Convert orders data to dictionary 
+
+    orders_dict = create_okx_orders_dictionary(orders_data)
 
     return orders_dict
-
-
