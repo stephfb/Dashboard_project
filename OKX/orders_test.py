@@ -1,7 +1,8 @@
 import sys
-sys.path.append("../Dashboard_project")  # Add the parent folder to the module search path
+sys.path.append("../Dashboard_project-main")  # Add the parent folder to the module search path
 
 import okx.Trade as Trade
+from OKX.orders import okx_get_order_list
 
 def okx_get_open_orders(apikey, secretkey, passphrase, instType="", ordType=""):
     # API initialization
@@ -18,7 +19,7 @@ def okx_get_open_orders(apikey, secretkey, passphrase, instType="", ordType=""):
         return None
 
     # Return the open orders
-    return result["data"]
+    print( result["data"])
     
 
 
@@ -31,5 +32,8 @@ if __name__ == "__main__":
 
 
     # Retrieve all open orders
-    open_orders = okx_get_open_orders(okx_api_key,  okx_api_secret, okx_passphrase)
+    #open_orders = okx_get_open_orders(okx_api_key,  okx_api_secret, okx_passphrase)
+    order_dict = okx_get_order_list(okx_api_key,  okx_api_secret, okx_passphrase)
+    print(order_dict['Symbol'])
+   
 

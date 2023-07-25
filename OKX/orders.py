@@ -6,16 +6,16 @@ import config  # Import the config module from the parent folder
 import okx.Trade as Trade
 
 def create_okx_orders_dictionary(orders_data):
-    orders_dict = {}
+    orders_dict =[]
     if isinstance(orders_data, list):
         for order in orders_data:
-            orders_dict = {
+            orders_dict.append({
                 'Symbol': order['instId'],
                 'Time': order['uTime'],
                 'Side': order['side'],
                 'Filled': order['fillSz'],
                 'Filled Price': order['fillPx'],
-            }
+            })
     else:
         orders_dict = {}
     return orders_dict
@@ -32,7 +32,8 @@ def okx_get_order_list(apikey, secretkey, passphrase):
 
     #Get orders information 
 
-    result = tradeAPI.get_order_list()
+    result = tradeAPI.get_order_list(instType="",
+        ordType="")
 
     orders_data = result['data'] if 'data' in result else []
 
@@ -41,3 +42,4 @@ def okx_get_order_list(apikey, secretkey, passphrase):
     orders_dict = create_okx_orders_dictionary(orders_data)
 
     return orders_dict
+    #print(orders_dict)

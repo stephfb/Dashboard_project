@@ -100,6 +100,7 @@
         {% endfor %}
         {% endif %}
     </table>
+    
 
     <h3 onclick="toggleSection('binance-orders')">Binance</h3>
     <table id="binance-orders" class="hidden">
@@ -116,14 +117,14 @@
         {% if binance_orders is defined %}
         {% for order in binance_orders %}
         <tr>
-            <td>{{ order.time }}</td>
-            <td>{{ order.symbol }}</td>
-            <td>{{ order.type }}</td>
-            <td>{{ order.side }}</td>
-            <td>{{ order.price }}</td>
-            <td>{{ order.quantity }}</td>
-            <td>{{ order.executedqty }}</td>
-            <td>{{ order.icebergqty }}</td>
+            <td>{{ order['time'] }}</td>
+            <td>{{ order['symbol'] }}</td>
+            <td>{{ order['type'] }}</td>
+            <td>{{ order['side'] }}</td>
+            <td>{{ order['price'] }}</td>
+            <td>{{ order['quantity'] }}</td>
+            <td>{{ order['executedqty'] }}</td>
+            <td>{{ order['icebergqty'] }}</td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -142,11 +143,11 @@
         {% if binance_positions is defined %}
         {% for position in binance_positions %}
         <tr>
-            <td>{{ position.symbol }}</td>
-            <td>{{ position.amount }}</td>
-            <td>{{ position.entry_price }}</td>
-            <td>{{ position.mark_price }}</td>
-            <td>{{ position.unrealized_profit }}</td>
+            <td>{{ position['symbol'] }}</td>
+            <td>{{ position['amount'] }}</td>
+            <td>{{ position['entry_price'] }}</td>
+            <td>{{ position['mark_price'] }}</td>
+            <td>{{ position['unrealized_profit'] }}</td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -182,6 +183,69 @@
         {% endfor %}
         {% endif %}
     </table>
+
+    <h2>Trade History</h1>
+        <h3 onclick="toggleSection('binance-trade-history')">Binance</h3>
+        <select id="ticker">
+            {% for ticker in tickers %}
+              <option value="{{ ticker }}">{{ ticker }}</option>
+            {% endfor %}
+            </select>
+            <div>
+                <table id="binance-trade-history" class="hidden">
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Trade ID</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Commission</th>
+                        <th>Time</th>
+                    </tr>
+                    {% if binance_trades is defined %}
+                    {% for trade in binance_trades %}
+                    <tr>
+                        <td>{{ position['symbol'] }}</td>
+                        <td>{{ position['trade_id'] }}</td>
+                        <td>{{ position['price'] }}</td>
+                        <td>{{ position['quantity'] }}</td>
+                        <td>{{ position['commission'] }}</td>
+                        <td>{{ position['time'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+    
+    
+        <h3 onclick="toggleSection('okx-positions')">OKX</h3>
+        <table id="okx-positions" class="hidden">
+            <tr>
+                <th>Symbol</th>
+                <th>Size</th>
+                <th>Entry Price</th>
+                <th>Margin</th>
+                <th>Mark Price</th>
+                <th>Margin Level</th>
+                <th>Est Liquidity Price</th>
+                <th>PnL</th>
+                <th>PnL%</th>
+            </tr>
+            {% if okx_positions is defined %}
+            {% for position in okx_positions %}
+            <tr>
+                <td>{{ position['Symbol'] }}</td>
+                <td>{{ position['Size']|float|round(2) }}</td>
+                <td>{{ position['Entry Price']|float|round(2) }}</td>
+                <td>{{ position['Margin']|float|round(2) }}</td>
+                <td>{{ position['Mark Price']|float|round(2) }}</td>
+                <td>{{ position['Margin Level']|float|round(2) }}</td>
+                <td>{{ position['Est Liquidity Price']|float|round(2) }}</td>
+                <td>{{ position['PnL']|float|round(2) }}</td>
+                <td>{{ (position['PnL%']|float * 100)|round(2) }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </table>
 
 </body>
 </html>
