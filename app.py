@@ -28,20 +28,13 @@ def dashboard():
         binance_trades = []
         print(f"Error connecting to Binance API: {str(e)}")
 
-    try:
-        # Retrieve OKX data
-        okx_api_key = config.okx_api_key
-        okx_api_secret = config.okx_api_secret
-        okx_passphrase = config.okx_passphrase
-        okx_balance = okx_get_account_balance(okx_api_key, okx_api_secret, okx_passphrase)
-        okx_orders = okx_get_order_list(okx_api_key, okx_api_secret, okx_passphrase)
-        okx_positions = okx_get_positions(okx_api_key, okx_api_secret, okx_passphrase)
-    except Exception as e:
-        # Handle OKX API connection error
-        okx_balance = []
-        okx_orders = []
-        okx_positions = []
-        print(f"Error connecting to OKX API: {str(e)}")
+    # Retrieve OKX data
+    okx_api_key = config.okx_api_key
+    okx_api_secret = config.okx_api_secret
+    okx_passphrase = config.okx_passphrase
+    okx_balance = okx_get_account_balance(okx_api_key, okx_api_secret, okx_passphrase)
+    okx_orders = get_order_list(okx_api_key, okx_api_secret, okx_passphrase)
+    okx_positions = okx_get_positions(okx_api_key, okx_api_secret, okx_passphrase)
 
     return render_template('dashboard.html',
                            binance_orders=binance_orders,
@@ -57,4 +50,3 @@ def dashboard():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
-

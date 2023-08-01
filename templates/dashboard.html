@@ -7,7 +7,10 @@
             border-collapse: collapse;
             width: 100%;
             margin-left: 20px;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 966bab2 (commit_change_macs)
         }
         th, td {
             text-align: left;
@@ -43,7 +46,11 @@
 <body>
     
     <h1>Trading Dashboard</h1>
+<<<<<<< HEAD
     <h2>Balances</h1>
+=======
+    <h2>Balances</h2>
+>>>>>>> 966bab2 (commit_change_macs)
     <h3 onclick="toggleSection('okx-balance')">OKX</h3>
     <table id="okx-balance" class="hidden">
         <tr>
@@ -55,8 +62,13 @@
         {% for currency, balance_info in okx_balance.items() %}
         <tr>
             <td>{{ currency }}</td>
+<<<<<<< HEAD
             <td>{{ balance_info.Equity|float|round(2) }}</td>
             <td>{{ balance_info['Available Equity']|float|round(2) }}</td>
+=======
+            <td>{{ balance_info['Available Equity']|float|round(2) }}</td>
+            <td>{{ balance_info['Equity']|float|round(2) }}</td>
+>>>>>>> 966bab2 (commit_change_macs)
         </tr>
         {% endfor %}
         {% endif %}
@@ -72,13 +84,17 @@
         {% for asset, balance_info in binance_balance.items() %}
         <tr>
             <td>{{ asset }}</td>
-            <td>{{ "%.2f" % balance_info.free }}</td>
+            <td>{{ balance_info['free']|float|round(2) }}</td>
         </tr>
         {% endfor %}
         {% endif %}
     </table>
     
+<<<<<<< HEAD
     <h2>Orders</h1>
+=======
+    <h2>Orders</h2>
+>>>>>>> 966bab2 (commit_change_macs)
     <h3 onclick="toggleSection('okx-orders')">OKX</h3>
     <table id="okx-orders" class="hidden">
         <tr>
@@ -116,6 +132,7 @@
         {% if binance_orders is defined %}
         {% for order in binance_orders %}
         <tr>
+<<<<<<< HEAD
             <td>{{ order.time }}</td>
             <td>{{ order.symbol }}</td>
             <td>{{ order.type }}</td>
@@ -124,12 +141,26 @@
             <td>{{ order.quantity }}</td>
             <td>{{ order.executedqty }}</td>
             <td>{{ order.icebergqty }}</td>
+=======
+            <td>{{ order['time'] }}</td>
+            <td>{{ order['symbol'] }}</td>
+            <td>{{ order['type'] }}</td>
+            <td>{{ order['side'] }}</td>
+            <td>{{ order['quantity'] }}</td>
+            <td>{{ order['price'] }}</td>
+            <td>{{ order['executedqty'] }}</td>
+            <td>{{ order['icebergqty'] }}</td>
+>>>>>>> 966bab2 (commit_change_macs)
         </tr>
         {% endfor %}
         {% endif %}
     </table>
 
+<<<<<<< HEAD
     <h2>Positions</h1>
+=======
+    <h2>Positions</h2>
+>>>>>>> 966bab2 (commit_change_macs)
     <h3 onclick="toggleSection('binance-positions')">Binance</h3>
     <table id="binance-positions" class="hidden">
         <tr>
@@ -142,11 +173,11 @@
         {% if binance_positions is defined %}
         {% for position in binance_positions %}
         <tr>
-            <td>{{ position.symbol }}</td>
-            <td>{{ position.amount }}</td>
-            <td>{{ position.entry_price }}</td>
-            <td>{{ position.mark_price }}</td>
-            <td>{{ position.unrealized_profit }}</td>
+            <td>{{ position['symbol'] }}</td>
+            <td>{{ position['amount'] }}</td>
+            <td>{{ position['entry_price'] }}</td>
+            <td>{{ position['mark_price'] }}</td>
+            <td>{{ position['unrealized_profit'] }}</td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -182,6 +213,57 @@
         {% endfor %}
         {% endif %}
     </table>
+<<<<<<< HEAD
 
 </body>
 </html>
+=======
+
+
+    <h2>Trade History</h2>
+    <h3 onclick="toggleSection('binance-trade-history')">Binance</h3>
+    <!-- Binance trade history table -->
+    <table id="binance-trade-history" class="hidden">
+        <tr>
+            <th>Symbol</th>
+            <th>Order ID</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Quote Quantity</th>
+            <th>Commission</th>
+            <th>Commission Asset</th>
+            <th>Time</th>
+            <th>Buyer</th>
+            <th>Maker</th>
+            <th>Best Match</th>
+        </tr>
+        {% if binance_historical_trades %}
+        {% for trade in binance_historical_trades %}
+        <tr>
+            <td>{{ trade.symbol }}</td>
+            <td>{{ trade.orderId }}</td>
+            <td>{{ trade.price }}</td>
+            <td>{{ trade.qty }}</td>
+            <td>{{ trade.quoteQty }}</td>
+            <td>{{ trade.commission }}</td>
+            <td>{{ trade.commissionAsset }}</td>
+            <td>{{ trade.time }}</td>
+            <td>{{ trade.isBuyer }}</td>
+            <td>{{ trade.isMaker }}</td>
+            <td>{{ trade.isBestMatch }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+>>>>>>> 966bab2 (commit_change_macs)
